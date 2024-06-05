@@ -51,7 +51,6 @@ Finally, the MFQEv2 dataset root will be sym-linked to the folder `./data/` auto
 See `script.sh`.
 ## 3. Test
 
-
 We utilize 1 NVIDIA GeForce RTX 3090 GPU for testing：
 
 ```bash
