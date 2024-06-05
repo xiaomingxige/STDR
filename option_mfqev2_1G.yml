@@ -1,0 +1,106 @@
+dataset:
+  train:  # LMDB
+    type: MFQEv2Dataset
+    
+    # for lmdb
+    root: /home/luodengyan/mfqe_datasets/YUV
+    gt_folder: train_raw_yuv/      # train_108/raw/
+    lq_folder: train_qp_yuv/QP37/  # train_108/HM16.5_LDP/QP37/
+    
+    # for dataset
+    gt_path: mfqev2_train_gt_7frame.lmdb
+    lq_path: mfqev2_train_qp37_7frame.lmdb
+    meta_info_fp: meta_info.txt
+    gt_size: 128  # ground truth patch size: gt_size * gt_size
+    use_flip: True
+    use_rot: True  # rotation per 90 degrees
+    random_reverse: False
+
+    # for datasampler
+    enlarge_ratio: 300  # enlarge dataset by randomly cropping.
+    
+    # for dataloader
+    num_worker_per_gpu: 32  # 32 in total. mainly affect IO speed
+    batch_size_per_gpu: 32  # bs=32, divided by 4 GPUs
+  
+  val:  # Disk IO
+    type: VideoTestMFQEv2Dataset
+
+    gt_path: test_raw_yuv/   
+    lq_path: test_qp_yuv/QP37/  
+
+  test:
+    type: VideoTestMFQEv2Dataset
+    gt_path: test_raw_yuv/  
+    lq_path: test_qp_yuv/QP37/ 
+
+
+
+network:
+  radius: 3  # total num of input frame = 2 * radius + 1
+
+  stdf:
+    in_nc: 1  # 1 for Y
+    out_nc: 64
+    nf: 64  # num of feature maps
+    nb: 3  # num of conv layers
+    base_ks: 3
+    deform_ks: 3  # size of the deformable kernel
+
+  Ada_RDBlock_num: 4
+
+  Ada_RDBlock:
+    in_nc: 32
+    growthRate: 32
+    num_layer: 4
+    reduce_ratio: 4
+    a: 1
+    b: 0.2
+
+    
+
+train:
+  exp_name: QP37  # default: timestr. None: ~
+  random_seed: 7
+  pre-val: False  # evaluate criterion before training, e.g., ori PSNR
+
+  num_iter: !!float 3e+5 # 3e+5
+  interval_print: !!float 100  # 100
+  interval_val: !!float 5e+3  # 5e+3  # also save model
+  pbar_len: 100
+
+  # num_iter: !!float 1e+5 # for QP22, QP27, QP32 and QP42
+  # interval_print: !!float 100
+  # interval_val: !!float 2e+3  
+  # pbar_len: 100
+  # fine_tune: True  
+  # fine_tune_path: '.pt'
+
+  optim:
+    type: Adam
+    lr: !!float 1e-4  # init lr of scheduler
+    betas: [0.9, 0.999]
+    eps: !!float 1e-08
+
+  scheduler:
+    is_on: False
+    type: CosineAnnealingRestartLR
+    periods: [!!float 5e+4, !!float 5e+4, !!float 5e+4, !!float 5e+4, !!float 5e+4, !!float 5e+4]  # epoch interval
+    restart_weights: [1, 0.5, 0.5, 0.5, 0.5, 0.5]
+    eta_min: !!float 1e-7
+
+  loss:
+    type: CharbonnierLoss
+    eps: !!float 1e-6
+
+  criterion:
+    type: PSNR
+    unit: dB
+
+test:
+  restore_iter: !!float 200000
+  pbar_len: 100
+
+  criterion:
+    type: PSNR
+    unit: dB
