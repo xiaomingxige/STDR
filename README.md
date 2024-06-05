@@ -3,12 +3,12 @@ The PyTorch implementation for the STDR: *[Spatio-Temporal Detail Information Re
 ## 1. Pre-request
 ### 1.1. Environment
 ```bash
-conda create -n CF-STIF python=3.10.11
-conda activate CF-STIF
+conda create -n STDR python=3.10.11
+conda activate STDR
 conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
 
-git clone --depth=1 https://github.com/xiaomingxige/CF-STIF
-cd CF-STIF
+git clone --depth=1 https://github.com/xiaomingxige/STDR
+cd STDR
 pip install -r requirements.txt
 ```
 ### 1.2. DCNv2
