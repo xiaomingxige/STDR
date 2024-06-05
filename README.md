@@ -51,7 +51,7 @@ Finally, the MFQEv2 dataset root will be sym-linked to the folder `./data/` auto
 See `script.sh`.
 ## 3. Test
 
-Pretrained models can be found here: [GoogleDisk](https://drive.google.com/drive/folders/1swK_hkjMhcIqxH1NbENw2zQSHmuzD4x6?usp=sharing) and [[百度网盘 (TMM0)]](https://pan.baidu.com/s/1YvX42OPC59qwfmgAuSVf4w)
+
 We utilize 1 NVIDIA GeForce RTX 3090 GPU for testing：
 
 ```bash
