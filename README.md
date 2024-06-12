@@ -1,5 +1,5 @@
 ﻿# *Spatio-Temporal Detail Information Retrieval for Compressed Video Quality Enhancement* (TMM 2023)
-The PyTorch implementation for the STDR: *[Spatio-Temporal Detail Information Retrieval for Compressed Video Quality Enhancement](https://ieeexplore.ieee.org/abstract/document/9919404)* which is accepted by [IEEE TMM 2022].
+The PyTorch implementation for the STDR: *[Spatio-Temporal Detail Information Retrieval for Compressed Video Quality Enhancement](https://ieeexplore.ieee.org/abstract/document/9919404)* which is accepted by [IEEE TMM 2023].
 ## 1. Pre-request
 ### 1.1. Environment
 ```bash
